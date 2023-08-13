@@ -1,3 +1,6 @@
+"""
+conftest.py contains fixtures for use in the rest of testing modules.
+"""
 import logging as logger
 import pytest
 
@@ -10,6 +13,7 @@ LOG_FILE_PATH = "log.txt"
 
 @pytest.fixture(scope="module")
 def setup():
+    """ basic setup of the webdriver and call to website """
     logger.info("setting up the logger...")
     service = Service()
     options = webdriver.ChromeOptions()
@@ -29,6 +33,3 @@ def clear_output_file():
     """
     with open(OUTPUT_FILE_PATH, 'w') as file:
         pass
-
-
-

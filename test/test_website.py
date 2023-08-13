@@ -1,3 +1,7 @@
+"""
+The initial testing for my website - mostly sanity checks for now.
+As the website gets more bells and whistles, I will test them here.
+"""
 import logging as logger
 
 from selenium import webdriver
@@ -6,9 +10,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-
-def test_print_href(setup):
+def test_sanity(setup):
     driver: webdriver.Chrome = setup
+    print(driver.title)  # sanity check
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "div")))
     links = driver.find_elements(By.TAG_NAME, "div")
     for lnk in links:
