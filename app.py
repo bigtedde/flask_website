@@ -4,6 +4,11 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+@app.route('/')
+def index():
+    return "Welcome to my blog!"
+
+
 @app.route('/api/blogs')
 def blogs():
     return jsonify([
