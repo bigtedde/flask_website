@@ -1,0 +1,29 @@
+import logging as logger
+
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+
+
+def test_print_href(setup):
+    driver: webdriver.Chrome = setup
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "div")))
+    links = driver.find_elements(By.TAG_NAME, "div")
+    for lnk in links:
+        logger.info(lnk.get_attribute("class"))
+
+
+def test_print_all_blogs(setup):
+    driver: webdriver.Chrome = setup
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "h2")))
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "p")))
+
+    blog_titles = driver.find_elements(By.TAG_NAME, "h2")
+    blog_contents = driver.find_elements(By.TAG_NAME, "p")
+    logger.info(f"Found {len(blog_titles)} titles and {len(blog_contents)} contents.")
+
+    with open("output.txt", "a") as file:
+        for title, content in zip(blog_titles, blog_contents):
+            file.write(f"{title.text}:\n{content.text}\n")
