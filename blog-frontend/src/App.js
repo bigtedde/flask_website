@@ -1,36 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import BlogList from './components/BlogList';
+import NewBlogForm from './components/NewBlogForm';
+import { fetchBlogs, addBlog } from './services/blogService';
 import './App.css';
-
-window.addEventListener('unhandledrejection', (event) => {
-    console.error('Unhandled promise rejection:', event.promise, event.reason);
-});
 
 function App() {
   const [blogs, setBlogs] = useState([]);
+  const [showInput, setShowInput] = useState(false);
+
+  const handleShowForm = () => {
+    setShowInput(!showInput);
+  };
+
+  const handleNewBlog = (title, content) => {
+    addBlog(title, content)
+      .then(newBlog => {
+        setBlogs(prevBlogs => [...prevBlogs, newBlog]);
+        setShowInput(false);
+      })
+      .catch(error => {
+        console.error("Error adding blog:", error);
+      });
+  }
 
   useEffect(() => {
-  fetch("https://teds-blogs-9c73db19cf47.herokuapp.com/api/blogs")
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`Server responded with status: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then(data => setBlogs(data))
-    .catch(error => {
-      console.error("Failed to fetch blogs:", error);
-    });
-}, []);
-
+    fetchBlogs()
+      .then(data => setBlogs(data))
+      .catch(error => {
+        console.error("Failed to fetch blogs:", error);
+      });
+  }, []);
 
   return (
     <div className="App">
-      {blogs.map(blog => (
-        <div key={blog.id}>
-          <h2>{blog.title}</h2>
-          <p>{blog.content}</p>
-        </div>
-      ))}
+      <button className="create-blog-btn" onClick={handleShowForm}>Create a new blog</button>
+      {showInput && <NewBlogForm onNewBlog={handleNewBlog} />}
+      <BlogList blogs={blogs} />
     </div>
   );
 }

@@ -13,7 +13,9 @@ from selenium.webdriver.common.by import By
 def test_sanity(setup):
     driver: webdriver.Chrome = setup
     print(driver.title)  # sanity check
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "div")))
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.TAG_NAME, "div"))
+    )
     links = driver.find_elements(By.TAG_NAME, "div")
     for lnk in links:
         logger.info(lnk.get_attribute("class"))
