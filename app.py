@@ -33,10 +33,16 @@ def handle_blogs():
 
     elif request.method == 'POST':
         blog_data = request.json
-        new_blog = Blog(title=blog_data['title'], content=blog_data['content'])
-        db.session.add(new_blog)
-        db.session.commit()
-        return jsonify({"id": new_blog.id, "title": new_blog.title, "content": new_blog.content}), 201
+        if not blog_data or 'title' not in blog_data or 'content' not in blog_data:
+            return jsonify({"error": "Invalid data provided"}), 400
+        try:
+            new_blog = Blog(title=blog_data['title'], content=blog_data['content'])
+            db.session.add(new_blog)
+            db.session.commit()
+            return jsonify({"id": new_blog.id, "title": new_blog.title, "content": new_blog.content}), 201
+        except:
+            db.session.rollback()
+            return jsonify({"error": "Error saving the blog"}), 500
 
 
 @app.route("/", defaults={"path": ""})
@@ -47,7 +53,20 @@ def serve(path):
     return send_from_directory(app.static_folder, "index.html")
 
 
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({"error": "Not found"}), 404
+
+
+@app.errorhandler(500)
+def internal_error(e):
+    return jsonify({"error": "Internal server error"}), 500
+
+
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    try:
+        with app.app_context():
+            db.create_all()
+        app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    except Exception as e:
+        print(f"Failed to run the app: {str(e)}")
