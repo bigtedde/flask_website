@@ -13,7 +13,7 @@ LOG_FILE_PATH = "log.txt"
 
 @pytest.fixture(scope="module")
 def setup():
-    """ basic setup of the webdriver and call to website """
+    """basic setup of the webdriver and call to website"""
     logger.info("setting up the logger...")
     service = Service()
     options = webdriver.ChromeOptions()
@@ -31,5 +31,5 @@ def clear_output_file():
     """
     It clears the content of the output file.
     """
-    with open(OUTPUT_FILE_PATH, 'w') as file:
+    with open(OUTPUT_FILE_PATH, "w") as file:
         pass

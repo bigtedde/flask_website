@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+.create-blog-btn {
+  padding: 10px 15px;
+  margin: 10px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.add-blog-btn:hover {
+  background-color: #2980b9;
+}
+
+.input-section {
+  margin-top: 20px;
+}
+
+.input-section input,
+.input-section textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.input-section textarea {
+  height: 100px;
+  resize: vertical;
+}

@@ -7,6 +7,14 @@ window.addEventListener('unhandledrejection', (event) => {
 
 function App() {
   const [blogs, setBlogs] = useState([]);
+  const [newTitle, setNewTitle] = useState('');
+  const [newContent, setNewContent] = useState('');
+  const [showInput, setShowInput] = useState(false);
+  const handleNewBlogClick = () => {
+    setShowInput(!showInput);
+  };
+
+
 
   useEffect(() => {
   fetch("https://teds-blogs-9c73db19cf47.herokuapp.com/api/blogs")
@@ -25,6 +33,16 @@ function App() {
 
   return (
     <div className="App">
+      <button className="create-blog-btn" onClick={handleNewBlogClick}>Create a new blog</button>
+
+      {showInput && (
+        <div className="input-section">
+          <input type="text" placeholder="Title" />
+          <textarea placeholder="Content"></textarea>
+          <button>Add Blog</button>
+        </div>
+      )}
+
       {blogs.map(blog => (
         <div key={blog.id}>
           <h2>{blog.title}</h2>
