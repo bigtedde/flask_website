@@ -10,11 +10,11 @@ from flask_cors import CORS
 app = Flask(__name__, static_folder="blog-frontend/build")
 
 # Replace postgres:// with postgresql:// for SQLAlchemy compatibility
-DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:///local_db.db')
+DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///local_db.db")
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 db = SQLAlchemy(app)
 
@@ -25,21 +25,35 @@ class Blog(db.Model):
     content = db.Column(db.Text, nullable=False)
 
 
-@app.route('/api/blogs', methods=['GET', 'POST'])
+@app.route("/api/blogs", methods=["GET", "POST"])
 def handle_blogs():
-    if request.method == 'GET':
+    if request.method == "GET":
         blogs = Blog.query.all()
-        return jsonify([{"id": blog.id, "title": blog.title, "content": blog.content} for blog in blogs])
+        return jsonify(
+            [
+                {"id": blog.id, "title": blog.title, "content": blog.content}
+                for blog in blogs
+            ]
+        )
 
-    elif request.method == 'POST':
+    elif request.method == "POST":
         blog_data = request.json
-        if not blog_data or 'title' not in blog_data or 'content' not in blog_data:
+        if not blog_data or "title" not in blog_data or "content" not in blog_data:
             return jsonify({"error": "Invalid data provided"}), 400
         try:
-            new_blog = Blog(title=blog_data['title'], content=blog_data['content'])
+            new_blog = Blog(title=blog_data["title"], content=blog_data["content"])
             db.session.add(new_blog)
             db.session.commit()
-            return jsonify({"id": new_blog.id, "title": new_blog.title, "content": new_blog.content}), 201
+            return (
+                jsonify(
+                    {
+                        "id": new_blog.id,
+                        "title": new_blog.title,
+                        "content": new_blog.content,
+                    }
+                ),
+                201,
+            )
         except:
             db.session.rollback()
             return jsonify({"error": "Error saving the blog"}), 500
