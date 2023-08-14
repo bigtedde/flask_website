@@ -2,9 +2,8 @@
 Main backend for the app.
 """
 import os
-from urllib import request
 
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS
 
 app = Flask(__name__, static_folder="blog-frontend/build")
@@ -17,17 +16,16 @@ blogs_list = [
 ]
 
 
-# @app.route('/api/blogs', methods=['POST'])
-# def add_blog():
-#     blog = request.json
-#     blog['id'] = len(blogs_list) + 1
-#     blogs_list.append(blog)
-#     return jsonify(blog), 201
+@app.route('/api/blogs', methods=['GET', 'POST'])
+def handle_blogs():
+    if request.method == 'GET':
+        return jsonify(blogs_list)
+    elif request.method == 'POST':
+        blog = request.json
+        blog['id'] = len(blogs_list) + 1
+        blogs_list.append(blog)
+        return jsonify(blog), 201
 
-
-@app.route("/api/blogs")
-def blogs():
-    return jsonify([blogs_list])
 
 
 @app.route("/", defaults={"path": ""})
