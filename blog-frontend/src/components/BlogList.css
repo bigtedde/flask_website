@@ -1,0 +1,37 @@
+.blog-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.blog-content {
+  flex: 1;
+}
+
+.blog-options {
+  position: relative;
+}
+
+.options-menu {
+  list-style-type: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  padding: 0;
+  margin: 5px 0 0;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.options-menu li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.options-menu li:hover {
+  background-color: #eee;
+}

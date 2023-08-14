@@ -1,3 +1,4 @@
+import './NewBlogForm.css';
 import React, { useState } from 'react';
 
 function NewBlogForm({ onNewBlog }) {

@@ -1,0 +1,16 @@
+.input-section {
+  margin-top: 20px;
+}
+
+.input-section input,
+.input-section textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.input-section textarea {
+  height: 100px;
+  resize: vertical;
+}
