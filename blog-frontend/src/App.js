@@ -26,23 +26,23 @@ function App() {
           content: newContent
         })
       })
-      .then(res => {
-        console.log('Raw Response:', res);
-        return res.text();  // <-- use text() first for debugging
-      })
-      .then(text => {
-        console.log('Response Text:', text);
-        // Then you can manually try converting it to JSON
-        const data = JSON.parse(text);
-      })
-//      .then(res => res.json())
-//      .then(newBlog => {
-//        setBlogs(prevBlogs => [...prevBlogs, newBlog]);
-//        // Reset the input fields after adding the new blog
-//        setNewTitle('');
-//        setNewContent('');
-//        setShowInput(false);
+//      .then(res => {
+//        console.log('Raw Response:', res);
+//        return res.text();  // <-- use text() first for debugging
 //      })
+//      .then(text => {
+//        console.log('Response Text:', text);
+//        // Then you can manually try converting it to JSON
+//        const data = JSON.parse(text);
+//      })
+      .then(res => res.json())
+      .then(newBlog => {
+        setBlogs(prevBlogs => [...prevBlogs, newBlog]);
+        // Reset the input fields after adding the new blog
+        setNewTitle('');
+        setNewContent('');
+        setShowInput(false);
+      })
       .catch(error => {
         console.error("Error adding blog:", error);
       });
