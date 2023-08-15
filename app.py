@@ -23,6 +23,7 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    position = db.Column(db.Integer, nullable=True)
 
 
 @app.route("/api/blogs", methods=["GET", "POST"])
@@ -31,8 +32,15 @@ def handle_blogs():
         blogs = Blog.query.all()
         return jsonify(
             [
-                {"id": blog.id, "title": blog.title, "content": blog.content}
-                for blog in blogs
+                {
+                    "id": blog.id,
+                    "title": blog.title,
+                    "content": blog.content,
+                    "position": blog.position if blog.position is not None else blog.id,
+                }
+                for blog in sorted(
+                    blogs, key=lambda x: x.position if x.position is not None else x.id
+                )
             ]
         )
 
@@ -42,6 +50,10 @@ def handle_blogs():
             return jsonify({"error": "Invalid data provided"}), 400
         try:
             new_blog = Blog(title=blog_data["title"], content=blog_data["content"])
+            highest_position = (
+                db.session.query(db.func.max(Blog.position)).scalar() or 0
+            )
+            new_blog.position = highest_position + 1
             db.session.add(new_blog)
             db.session.commit()
             return (
@@ -50,6 +62,7 @@ def handle_blogs():
                         "id": new_blog.id,
                         "title": new_blog.title,
                         "content": new_blog.content,
+                        "position": new_blog.position,
                     }
                 ),
                 201,
@@ -57,6 +70,35 @@ def handle_blogs():
         except:
             db.session.rollback()
             return jsonify({"error": "Error saving the blog"}), 500
+
+
+@app.route("/api/blogs/<int:blog_id>", methods=["PUT"])
+def handle_update_blog(blog_id):
+    blog = Blog.query.get(blog_id)
+    if not blog:
+        return jsonify({"error": "Blog not found"}), 404
+
+    blog_data = request.json
+    if not blog_data or "title" not in blog_data or "content" not in blog_data:
+        return jsonify({"error": "Invalid data provided"}), 400
+    try:
+        blog.title = blog_data["title"]
+        blog.content = blog_data["content"]
+        db.session.commit()
+        return (
+            jsonify(
+                {
+                    "id": blog.id,
+                    "title": blog.title,
+                    "content": blog.content,
+                    "position": blog.position,
+                }
+            ),
+            200,
+        )
+    except:
+        db.session.rollback()
+        return jsonify({"error": "Error updating the blog"}), 500
 
 
 @app.route("/", defaults={"path": ""})

@@ -14,19 +14,36 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  padding: 100px 0;
+  background-color: grey;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: pink;
 }
 
 .App-link {
-  color: #61dafb;
+  color: #black;
 }
+
+.app-header {
+  padding: 65px; /* 20px padding to the top and bottom. Adjust as needed. */
+  background-color: teal; /* Optional: give it a background color so it stands out. */
+  text-align: center; /* Optional: to center any elements inside it. */
+  font-size: 24px;
+  display: flex; /* Use flexbox for centering */
+  align-items: center; /* Vertically center items within the header */
+  justify-content: space-between; /* Spread items along the header */
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+
 
 @keyframes App-logo-spin {
   from {
@@ -37,34 +54,30 @@
   }
 }
 
+@keyframes rainbowSlide {
+    0% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
 .create-blog-btn {
-  padding: 10px 15px;
+  position: flex; /* Position the button within the header */
+  top: 50%; /* Move the button down by 50% of its height */
+  transform: translateY(0%); /* Adjust to vertically center the button */
+  width: 250px; /* Set your desired width */
+  height: 60px; /* Set your desired height */
   margin: 10px;
-  background-color: #3498db;
-  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(135deg, red, orange, yellow, green, blue, indigo, violet, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 200% 100%; /* set the size to 200% of the button width */
+  animation: rainbowSlide 5s linear infinite; /* Apply animation */
+  color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.add-blog-btn:hover {
-  background-color: #2980b9;
-}
-
-.input-section {
-  margin-top: 20px;
-}
-
-.input-section input,
-.input-section textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-}
-
-.input-section textarea {
-  height: 100px;
-  resize: vertical;
+  transition: background-color .3s ease;
 }
