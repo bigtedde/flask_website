@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './BlogList.css';
 
 function BlogList({ blogs, updateBlog }) {
   const [editingBlogId, setEditingBlogId] = useState(null);
@@ -24,11 +25,13 @@ function BlogList({ blogs, updateBlog }) {
             {editingBlogId === blog.id ? (
               <>
                 <input
+                  className="edited-title"
                   type="text"
                   value={editedTitle}
                   onChange={e => setEditedTitle(e.target.value)}
                 />
                 <textarea
+                  className="editing-content"
                   value={editedContent}
                   onChange={e => setEditedContent(e.target.value)}
                 />
@@ -42,12 +45,15 @@ function BlogList({ blogs, updateBlog }) {
           </div>
           <div className="blog-options">
             {editingBlogId === blog.id ? (
-              <button onClick={() => handleDoneEditingClick(blog.id)}>Done Editing</button>
+              <button
+              className="blog-button done-editing-button"
+              onClick={() => handleDoneEditingClick(blog.id)}>Done Editing
+              </button>
             ) : (
               <>
-                <button className="edit-button" onClick={() => handleEditClick(blog)}>Edit</button>
-                <button className="delete-button">Delete</button>
-                <button className="copy-button">Copy</button>
+                <button className="blog-button edit-button" onClick={() => handleEditClick(blog)}>Edit</button>
+                <button className="blog-button delete-button">Delete</button>
+                <button className="blog-button copy-button">Copy</button>
               </>
             )}
           </div>

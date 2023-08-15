@@ -1,7 +1,7 @@
 .blog-container {
   background-color: #faf3e0;
   margin-top: 20px;
-  width: 50%; /* make the container 50% of the parent size */
+  width: 75%; /* make the container 50% of the parent size */
   margin-left: auto;
   margin-right: auto; /* center the container */
   display: flex;
@@ -23,6 +23,15 @@
   gap: 10px;
   }
 
+
+.edited-title, .editing-content {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
 .blog-button {
   border: none; /* Remove borders */
   border-radius: 5px;
@@ -31,6 +40,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.1s ease; /* Add transition for smooth color change */
   outline: none; /* Remove focus border around button */
+  margin-left: 20px
 }
 
 /* Add hover and active states for feedback */
@@ -55,4 +65,10 @@
 .copy-button {
   background-color: #7b5fa6; /* Use a softer purple */
   color: white;
+}
+
+.done-editing-button {
+  background-color: #66b366; /* Use a softer purple */
+  color: white;
+  padding-left: 20px;
 }

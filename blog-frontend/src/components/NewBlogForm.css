@@ -1,6 +1,6 @@
 .input-section {
   margin-top: 20px;
-  width: 50%; /* make the container 50% of the parent size */
+  width: 80%; /* make the container 50% of the parent size */
   margin-left: auto;
   margin-right: auto; /* center the container */
 }
