@@ -26,7 +26,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #black;
 }
 
 .app-header {
@@ -38,6 +38,11 @@
   align-items: center; /* Vertically center items within the header */
   justify-content: space-between; /* Spread items along the header */
 }
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
 
 
 @keyframes App-logo-spin {
