@@ -1,4 +1,9 @@
 .blog-container {
+  background-color: grey;
+  margin-top: 20px;
+  width: 50%; /* make the container 50% of the parent size */
+  margin-left: auto;
+  margin-right: auto; /* center the container */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,8 +13,17 @@
 }
 
 .blog-content {
+  color: white;
   flex: 1;
 }
+
+.options-button {
+    width: 100px; /* Set your desired width */
+    height: 40px; /* Set your desired height */
+    border-radius: 8px;
+    /* You can also add more styling properties here if needed */
+}
+
 
 .blog-options {
   position: relative;

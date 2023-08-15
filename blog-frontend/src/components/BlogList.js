@@ -13,7 +13,7 @@ function BlogList({ blogs }) {
             <p>{blog.content}</p>
           </div>
           <div className="blog-options">
-            <button onClick={() => setShownOptionsBlogId(blog.id)}>Options</button>
+            <button className="options-button" onClick={() => setShownOptionsBlogId(blog.id)}>Options</button>
             {shownOptionsBlogId === blog.id && (
               <ul className="options-menu">
                 <li>Remove</li>

@@ -33,7 +33,10 @@ function App() {
 
   return (
     <div className="App">
-      <button className="create-blog-btn" onClick={handleShowForm}>Create a new blog</button>
+      <header className="app-header">Google Summer of Code 2023 - Weekly Blogs by Ted Lawson
+        <button className="create-blog-btn" onClick={handleShowForm}>Create a new blog</button>
+        {/* I can put more header objects here in the future*/}
+        </header>
       {showInput && <NewBlogForm onNewBlog={handleNewBlog} />}
       <BlogList blogs={blogs} />
     </div>
