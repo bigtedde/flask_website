@@ -1,9 +1,7 @@
 import './BlogList.css';
-import React, { useState } from 'react';
+import React from 'react';
 
 function BlogList({ blogs }) {
-  const [shownOptionsBlogId, setShownOptionsBlogId] = useState(null);
-
   return (
     <>
       {blogs.map(blog => (
@@ -13,13 +11,9 @@ function BlogList({ blogs }) {
             <p>{blog.content}</p>
           </div>
           <div className="blog-options">
-            <button className="options-button" onClick={() => setShownOptionsBlogId(blog.id)}>Options</button>
-            {shownOptionsBlogId === blog.id && (
-              <ul className="options-menu">
-                <li>Remove</li>
-                <li>Delete</li>
-              </ul>
-            )}
+            <button className="blog-button edit-button">Edit</button>
+            <button className="blog-button delete-button">Delete</button>
+            <button className="blog-button copy-button">Copy</button>
           </div>
         </div>
       ))}
