@@ -59,6 +59,30 @@ def handle_blogs():
             return jsonify({"error": "Error saving the blog"}), 500
 
 
+@app.route("/api/blogs/<int:blog_id>", methods=["PUT"])
+def handle_update_blog(blog_id):
+    blog = Blog.query.get(blog_id)
+    if not blog:
+        return jsonify({"error": "Blog not found"}), 404
+
+    blog_data = request.json
+    if not blog_data or "title" not in blog_data or "content" not in blog_data:
+        return jsonify({"error": "Invalid data provided"}), 400
+    try:
+        blog.title = blog_data["title"]
+        blog.content = blog_data["content"]
+        db.session.commit()
+        return jsonify({
+            "id": blog.id,
+            "title": blog.title,
+            "content": blog.content
+        }), 200
+    except:
+        db.session.rollback()
+        return jsonify({"error": "Error updating the blog"}), 500
+
+
+
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve(path):
@@ -67,12 +91,12 @@ def serve(path):
     return send_from_directory(app.static_folder, "index.html")
 
 
-@app.errorhandler(404)
+# @app.errorhandler(404)
 def not_found(e):
     return jsonify({"error": "Not found"}), 404
 
 
-@app.errorhandler(500)
+# @app.errorhandler(500)
 def internal_error(e):
     return jsonify({"error": "Internal server error"}), 500
 

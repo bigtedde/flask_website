@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BlogList from './components/BlogList';
 import NewBlogForm from './components/NewBlogForm';
-import { fetchBlogs, addBlog } from './services/blogService';
+import { fetchBlogs, addBlog, updateBlogInAPI } from './services/blogService';
 import './App.css';
 
 function App() {
@@ -23,6 +23,24 @@ function App() {
       });
   }
 
+  const handleUpdateBlog = (blogId, newTitle, newContent) => {
+  updateBlogInAPI(blogId, newTitle, newContent)
+    .then(updatedBlog => {
+      // Find the index of the blog you've updated
+      const blogIndex = blogs.findIndex(blog => blog.id === updatedBlog.id);
+      // Use the spread operator to make a new array with the updated blog
+      const newBlogs = [
+        ...blogs.slice(0, blogIndex),
+        updatedBlog,
+        ...blogs.slice(blogIndex + 1)
+      ];
+      setBlogs(newBlogs);
+    })
+    .catch(error => {
+      console.error("Error updating blog:", error);
+    });
+  }
+
   useEffect(() => {
     fetchBlogs()
       .then(data => setBlogs(data))
@@ -38,7 +56,7 @@ function App() {
         {/* I can put more header objects here in the future*/}
         </header>
       {showInput && <NewBlogForm onNewBlog={handleNewBlog} />}
-      <BlogList blogs={blogs} />
+      <BlogList blogs={blogs} updateBlog={handleUpdateBlog} />
     </div>
   );
 }
