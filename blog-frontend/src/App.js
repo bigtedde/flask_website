@@ -24,22 +24,30 @@ function App() {
   }
 
   const handleUpdateBlog = (blogId, newTitle, newContent) => {
-  updateBlogInAPI(blogId, newTitle, newContent)
-    .then(updatedBlog => {
-      // Find the index of the blog you've updated
-      const blogIndex = blogs.findIndex(blog => blog.id === updatedBlog.id);
-      // Use the spread operator to make a new array with the updated blog
-      const newBlogs = [
-        ...blogs.slice(0, blogIndex),
-        updatedBlog,
-        ...blogs.slice(blogIndex + 1)
-      ];
-      setBlogs(newBlogs);
-    })
-    .catch(error => {
-      console.error("Error updating blog:", error);
-    });
+    updateBlogInAPI(blogId, newTitle, newContent)
+      .then(updatedBlog => {
+        setBlogs(prevBlogs => {
+          // Find the index of the blog you've updated
+          const blogIndex = prevBlogs.findIndex(blog => blog.id === updatedBlog.id);
+
+          // Check if the blog was found
+          if (blogIndex === -1) {
+            return prevBlogs; // If not found, return the original array
+          }
+
+          // Use the spread operator to make a new array with the updated blog
+          return [
+            ...prevBlogs.slice(0, blogIndex),
+            updatedBlog,
+            ...prevBlogs.slice(blogIndex + 1)
+          ];
+        });
+      })
+      .catch(error => {
+        console.error("Error updating blog:", error);
+      });
   }
+
 
   useEffect(() => {
     fetchBlogs()
