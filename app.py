@@ -43,7 +43,7 @@ def handle_blogs():
             ]
         )
 
-    if request.method == "POST":
+    elif request.method == "POST":
         blog_data = request.json
         if not blog_data or "title" not in blog_data or "content" not in blog_data:
             return jsonify({"error": "Invalid data provided"}), 400
@@ -69,8 +69,6 @@ def handle_blogs():
         except:
             db.session.rollback()
             return jsonify({"error": "Error saving the blog"}), 500
-
-    return jsonify({"error": "Method not allowed"}), 405
 
 
 @app.route("/api/blogs/<int:blog_id>", methods=["PUT"])
@@ -116,9 +114,7 @@ def not_found(e):  # pylint: disable=unused-argument, invalid-name, redefined-ou
 
 
 @app.errorhandler(500)
-def internal_error(
-    e,
-):  # pylint: disable=unused-argument, invalid-name, redefined-outer-name
+def internal_error(e):  # pylint: disable=unused-argument, invalid-name, redefined-outer-name
     return jsonify({"error": "Internal server error"}), 500
 
 
