@@ -111,13 +111,15 @@ def serve(path):
 
 
 @app.errorhandler(404)
-def not_found(error):  # pylint: disable=unused-argument
-    return jsonify({"error": {"Not found"}}), 404
+def not_found(e):  # pylint: disable=unused-argument, invalid-name, redefined-outer-name
+    return jsonify({"error": "Not found"}), 404
 
 
 @app.errorhandler(500)
-def internal_error(error):  # pylint: disable=unused-argument
-    return jsonify({"error": {"Internal server error"}}), 500
+def internal_error(
+    e,
+):  # pylint: disable=unused-argument, invalid-name, redefined-outer-name
+    return jsonify({"error": "Internal server error"}), 500
 
 
 if __name__ == "__main__":
