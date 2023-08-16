@@ -7,7 +7,6 @@ analyse-fallback-blocks=no
 
 # Clear in-memory caches upon conclusion of linting. Useful if running pylint
 # in a server-like mode.
-clear-cache-post-run=no
 
 # Load and enable all available extensions. Use --list-extensions to see a list
 # all available extensions.
@@ -97,7 +96,6 @@ recursive=no
 # source root is an absolute path or a path relative to the current working
 # directory used to determine a package namespace for modules located under the
 # source root.
-source-roots=
 
 # When enabled, pylint would attempt to guess common misconfiguration and emit
 # user-friendly hints instead of false-positive error messages.
@@ -358,7 +356,6 @@ single-line-if-stmt=no
 allow-any-import-level=
 
 # Allow explicit reexports by alias from a package __init__.
-allow-reexport-from-package=no
 
 # Allow wildcard imports from modules that define __all__.
 allow-wildcard-with-all=no
@@ -447,7 +444,6 @@ enable=c-extension-no-member
 
 # List of qualified names (i.e., library.method) which require a timeout
 # parameter e.g. 'requests.api.get,requests.api.post'
-timeout-methods=requests.api.delete,requests.api.get,requests.api.head,requests.api.options,requests.api.patch,requests.api.post,requests.api.put,requests.api.request
 
 
 [MISCELLANEOUS]
