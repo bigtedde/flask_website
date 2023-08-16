@@ -28,7 +28,9 @@ def test_print_all_blogs(setup):
 
     blog_titles = driver.find_elements(By.TAG_NAME, "h2")
     blog_contents = driver.find_elements(By.TAG_NAME, "p")
-    logger.info(f"Found {len(blog_titles)} titles and {len(blog_contents)} contents.")
+    logger.info(
+        "Found %s titles and %s contents.", len(blog_titles), len(blog_contents)
+    )
 
     with open("output.txt", "a") as file:
         for title, content in zip(blog_titles, blog_contents):

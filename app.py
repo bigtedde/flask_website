@@ -9,7 +9,6 @@ from flask_cors import CORS
 
 app = Flask(__name__, static_folder="blog-frontend/build")
 
-# Replace postgres:// with postgresql:// for SQLAlchemy compatibility
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///local_db.db")
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
@@ -44,7 +43,7 @@ def handle_blogs():
             ]
         )
 
-    elif request.method == "POST":
+    if request.method == "POST":
         blog_data = request.json
         if not blog_data or "title" not in blog_data or "content" not in blog_data:
             return jsonify({"error": "Invalid data provided"}), 400
@@ -70,6 +69,8 @@ def handle_blogs():
         except:
             db.session.rollback()
             return jsonify({"error": "Error saving the blog"}), 500
+
+    return jsonify({"error": "Method not allowed"}), 405
 
 
 @app.route("/api/blogs/<int:blog_id>", methods=["PUT"])
@@ -110,13 +111,13 @@ def serve(path):
 
 
 @app.errorhandler(404)
-def not_found(e):
-    return jsonify({"error": "Not found"}), 404
+def not_found(error="Not found"):
+    return jsonify({"error": {error}}), 404
 
 
 @app.errorhandler(500)
-def internal_error(e):
-    return jsonify({"error": "Internal server error"}), 500
+def internal_error(error="Internal server error"):
+    return jsonify({"error": {error}}), 500
 
 
 if __name__ == "__main__":

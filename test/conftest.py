@@ -17,7 +17,6 @@ def setup():
     logger.info("setting up the logger...")
     service = Service()
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')
     driver = webdriver.Chrome(service=service, options=options)
     driver.get("https://teds-blogs-9c73db19cf47.herokuapp.com")
 
@@ -31,5 +30,5 @@ def clear_output_file():
     """
     It clears the content of the output file.
     """
-    with open(OUTPUT_FILE_PATH, "w") as file:
+    with open(OUTPUT_FILE_PATH, "w"):
         pass
